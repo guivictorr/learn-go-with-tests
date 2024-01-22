@@ -30,7 +30,7 @@ func TestAdd(t *testing.T) {
 
 		dictionary.Add(word, definition)
 
-		assetDefinition(t, dictionary, word, definition)
+		assertDefinition(t, dictionary, word, definition)
 	})
 	t.Run("adding a existing word", func(t *testing.T) {
 		word := "test"
@@ -42,7 +42,18 @@ func TestAdd(t *testing.T) {
 	})
 }
 
-func assetDefinition(t testing.TB, dictionary Dictionary, word, definition string) {
+func TestUpdate(t *testing.T) {
+	word := "test"
+	definition := "definition test"
+	dictionary := Dictionary{word: definition}
+	newDefinition := "new definition test"
+
+	dictionary.Update(word, newDefinition)
+
+	assertDefinition(t, dictionary, word, newDefinition)
+}
+
+func assertDefinition(t testing.TB, dictionary Dictionary, word, definition string) {
 	t.Helper()
 
 	got, err := dictionary.Search(word)
