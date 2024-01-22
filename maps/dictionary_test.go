@@ -1,6 +1,8 @@
 package maps
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestSearch(t *testing.T) {
 	dictionary := Dictionary{
@@ -20,14 +22,23 @@ func TestSearch(t *testing.T) {
 }
 
 func TestAdd(t *testing.T) {
-	dictionary := Dictionary{}
+	t.Run("adding a new word", func(t *testing.T) {
+		dictionary := Dictionary{}
 
-	word := "test"
-	definition := "this is just a test"
+		word := "test"
+		definition := "this is just a test"
 
-	dictionary.Add(word, definition)
+		dictionary.Add(word, definition)
 
-	assetDefinition(t, dictionary, word, definition)
+		assetDefinition(t, dictionary, word, definition)
+	})
+	t.Run("adding a existing word", func(t *testing.T) {
+		dictionary := Dictionary{}
+		dictionary.Add("test", "existing word")
+		err := dictionary.Add("test", "existing word")
+
+		assertError(t, err, ErrAlreadyExist)
+	})
 }
 
 func assetDefinition(t testing.TB, dictionary Dictionary, word, definition string) {
