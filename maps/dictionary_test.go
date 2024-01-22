@@ -33,9 +33,10 @@ func TestAdd(t *testing.T) {
 		assetDefinition(t, dictionary, word, definition)
 	})
 	t.Run("adding a existing word", func(t *testing.T) {
-		dictionary := Dictionary{}
-		dictionary.Add("test", "existing word")
-		err := dictionary.Add("test", "existing word")
+		word := "test"
+		definition := "testing definition"
+		dictionary := Dictionary{word: definition}
+		err := dictionary.Add(word, "new test")
 
 		assertError(t, err, ErrAlreadyExist)
 	})
