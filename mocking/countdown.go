@@ -22,6 +22,11 @@ func (s *DefaultSleeper) Sleep() {
 	time.Sleep(1 * time.Second)
 }
 
+type ConfigurableSleeper struct {
+	sleep    func(time.Duration)
+	duration time.Duration
+}
+
 func Countdown(out io.Writer, sleeper Sleeper) {
 	for i := countDownStart; i > 0; i-- {
 		fmt.Fprintln(out, i)
@@ -29,6 +34,9 @@ func Countdown(out io.Writer, sleeper Sleeper) {
 	}
 
 	fmt.Fprint(out, finalWord)
+}
+
+func (c *ConfigurableSleeper) Sleep() {
 }
 
 func main() {
