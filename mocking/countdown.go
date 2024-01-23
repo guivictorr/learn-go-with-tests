@@ -37,6 +37,7 @@ func Countdown(out io.Writer, sleeper Sleeper) {
 }
 
 func (c *ConfigurableSleeper) Sleep() {
+	c.sleep(c.duration)
 }
 
 func main() {
