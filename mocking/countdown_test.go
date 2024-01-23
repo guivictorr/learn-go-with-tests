@@ -35,19 +35,14 @@ func (s *SpySleeper) Sleep() {
 func TestCountdown(t *testing.T) {
 	t.Run("should countdown from 3", func(t *testing.T) {
 		buffer := &bytes.Buffer{}
-		spySleeper := &SpySleeper{}
 
-		Countdown(buffer, spySleeper)
+		Countdown(buffer, &SpyCountdownOperations{})
 
 		got := buffer.String()
 		want := "3\n2\n1\nGo"
 
 		if got != want {
 			t.Errorf("got %q want %q", got, want)
-		}
-
-		if spySleeper.Calls != 3 {
-			t.Errorf("not enough calls, want 3 got %d", spySleeper.Calls)
 		}
 	})
 	t.Run("sleep before every print", func(t *testing.T) {
