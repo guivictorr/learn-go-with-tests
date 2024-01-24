@@ -6,14 +6,24 @@ import (
 )
 
 func Racer(a, b string) (winner string) {
-	durationA := measureResponseTime(a)
-	durationB := measureResponseTime(b)
-
-	if durationA < durationB {
+	select {
+	case <-ping(a):
 		return a
-	}
+	case <-ping(b):
+		return b
 
-	return b
+	}
+}
+
+func ping(url string) chan struct{} {
+	ch := make(chan struct{})
+
+	go func() {
+		http.Get(url)
+		close(ch)
+	}()
+
+	return ch
 }
 
 func measureResponseTime(url string) time.Duration {
